@@ -29,7 +29,7 @@ public class SwerveModule {
 
     public static CRServoProfiler.Constraints SERVO_CONSTRAINTS = new CRServoProfiler.Constraints(1, 1000, 2);
 
-    public static double MAX_SERVO = 1, MAX_MOTOR = 1;
+    public static double MAX_SERVO = 1, MAX_MOTOR = 0.9;
 
     //EXPERIMENTAL FEATURES
     public static boolean WAIT_FOR_TARGET = false;
