@@ -24,9 +24,9 @@ import org.firstinspires.ftc.teamcode.drive.SampleSwerveDrive;
  * encoder localizer heading may be significantly off if the track width has not been tuned).
  */
 @Config
-@TeleOp(group = "drive")
+//@TeleOp(group = "drive")
 public class VeerControlsTest extends LinearOpMode {
-    public static PIDCoefficients HEADING_COEFFS = new PIDCoefficients(0.5, 0, 0);
+    public static PIDCoefficients HEADING_COEFFS = new PIDCoefficients(0.6, 0.1, 0);
     @Override
     public void runOpMode() throws InterruptedException {
         SampleSwerveDrive drive = new SampleSwerveDrive(hardwareMap);

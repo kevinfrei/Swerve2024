@@ -23,7 +23,7 @@ import org.firstinspires.ftc.teamcode.util.Encoder;
 
 @Config
 public class SwerveModule {
-    public static PIDCoefficients MODULE_PID = new PIDCoefficients(0.6, 0, 0.03);
+    public static PIDCoefficients MODULE_PID = new PIDCoefficients(0.5, 0.05, 0.03);
 
     public static double K_STATIC = 0.2, K_MOTOR = 0;
 

@@ -30,14 +30,19 @@ import com.acmerobotics.roadrunner.trajectory.constraints.ProfileAccelerationCon
 import com.acmerobotics.roadrunner.trajectory.constraints.TrajectoryAccelerationConstraint;
 import com.acmerobotics.roadrunner.trajectory.constraints.TrajectoryVelocityConstraint;
 import com.outoftheboxrobotics.photoncore.PhotonCore;
+import com.qualcomm.hardware.bosch.BHI260IMU;
 import com.qualcomm.hardware.bosch.BNO055IMU;
 import com.qualcomm.hardware.lynx.LynxModule;
+import com.qualcomm.hardware.rev.RevHubOrientationOnRobot;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.HardwareMap;
+import com.qualcomm.robotcore.hardware.IMU;
+import com.qualcomm.robotcore.hardware.ImuOrientationOnRobot;
 import com.qualcomm.robotcore.hardware.PIDFCoefficients;
 import com.qualcomm.robotcore.hardware.VoltageSensor;
 
+import org.firstinspires.ftc.robotcore.external.navigation.AngleUnit;
 import org.firstinspires.ftc.teamcode.trajectorysequence.TrajectorySequence;
 import org.firstinspires.ftc.teamcode.trajectorysequence.TrajectorySequenceBuilder;
 import org.firstinspires.ftc.teamcode.trajectorysequence.TrajectorySequenceRunner;
@@ -85,7 +90,7 @@ public class SampleSwerveDrive extends SwerveDrive {
     private double imuAngle = 0;
     private double imuAngleVelocity = 0;
     @GuardedBy("IMULock")
-    private BNO055IMU imu;
+    private IMU imu;
 
     public SampleSwerveDrive(HardwareMap hardwareMap) {
         super(kV, kA, kStatic, TRACK_WIDTH);
@@ -103,10 +108,7 @@ public class SampleSwerveDrive extends SwerveDrive {
 
         // TODO: adjust the names of the following hardware devices to match your configuration
         synchronized (IMULock) {
-            imu = hardwareMap.get(BNO055IMU.class, "imu");
-            BNO055IMU.Parameters parameters = new BNO055IMU.Parameters();
-            parameters.angleUnit = BNO055IMU.AngleUnit.RADIANS;
-            imu.initialize(parameters);
+            imu = hardwareMap.get(IMU.class, "imu");
         }
         // TODO: If the hub containing the IMU you are using is mounted so that the "REV" logo does
         // not face up, remap the IMU axes so that the z-axis points upward (normal to the floor.)
@@ -173,8 +175,8 @@ public class SampleSwerveDrive extends SwerveDrive {
         imuThread = new Thread(() -> {
             while (!opMode.isStopRequested() && opMode.opModeIsActive()) {
                 synchronized (IMULock) {
-                    imuAngle = imu.getAngularOrientation().firstAngle;
-                    imuAngleVelocity = -imu.getAngularVelocity().xRotationRate;
+                    imuAngle = imu.getRobotYawPitchRollAngles().getYaw(AngleUnit.RADIANS);
+                    imuAngleVelocity = imu.getRobotAngularVelocity(AngleUnit.RADIANS).zRotationRate;
                 }
             }
         });
