@@ -29,7 +29,7 @@ import com.acmerobotics.roadrunner.trajectory.constraints.MinVelocityConstraint;
 import com.acmerobotics.roadrunner.trajectory.constraints.ProfileAccelerationConstraint;
 import com.acmerobotics.roadrunner.trajectory.constraints.TrajectoryAccelerationConstraint;
 import com.acmerobotics.roadrunner.trajectory.constraints.TrajectoryVelocityConstraint;
-import com.outoftheboxrobotics.photoncore.PhotonCore;
+// import com.outoftheboxrobotics.photoncore.PhotonCore;
 import com.qualcomm.hardware.bosch.BHI260IMU;
 import com.qualcomm.hardware.bosch.BNO055IMU;
 import com.qualcomm.hardware.lynx.LynxModule;
@@ -163,10 +163,10 @@ public class SampleSwerveDrive extends SwerveDrive {
 
         trajectorySequenceRunner = new TrajectorySequenceRunner(follower, HEADING_PID);
 
-        //photon funnies
-        PhotonCore.enable();
-        PhotonCore.CONTROL_HUB.setBulkCachingMode(LynxModule.BulkCachingMode.MANUAL);
-        PhotonCore.experimental.setMaximumParallelCommands(MAX_PARALLEL_COMMANDS);
+        // photon funnies
+        // PhotonCore.enable();
+        // PhotonCore.CONTROL_HUB.setBulkCachingMode(LynxModule.BulkCachingMode.MANUAL);
+        // PhotonCore.experimental.setMaximumParallelCommands(MAX_PARALLEL_COMMANDS);
 
 
     }
@@ -251,9 +251,7 @@ public class SampleSwerveDrive extends SwerveDrive {
 
     public void updateModules(){
         for (SwerveModule m : modules) m.update();
-        PhotonCore.CONTROL_HUB.clearBulkCache();
-
-
+        // PhotonCore.CONTROL_HUB.clearBulkCache();
     }
     public void update() {
         updateModules();
